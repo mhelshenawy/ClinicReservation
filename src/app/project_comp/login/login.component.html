@@ -1,0 +1,92 @@
+<div class="container container-fluid">
+  <form
+    class="form-style rounded text-center"
+    #signinForm="ngForm"
+    novalidate
+    (ngSubmit)="Login(SigninUser)"
+  >
+    <h1>Login</h1>
+    <div class="group-control">
+      <label for="Email" class="form-label font-monospace text-white"
+        >Email</label
+      >
+      <input
+        type="email"
+        name="email"
+        required
+        class="form-control w-50 m-auto"
+        [(ngModel)]="SigninUser.email"
+        #Email="ngModel"
+        [class.is-invalid]="Email.invalid && Email.touched"
+        pattern="^[a-zA-Z][a-zA-Z.1-9]{3,}@[a-zA-Z]{2,}\.com$"
+      />
+      <small [class.d-none]="Email.valid || Email.untouched" class="text-danger"
+        >At least 4 characters before @ <br />
+        At least 2 charcter before (.com)
+      </small>
+    </div>
+
+    <div class="group-control">
+      <label for="Password" class="form-label font-monospace text-white"
+        >Password</label
+      >
+
+      <input
+        type="password"
+        required
+        name="password"
+        class="form-control w-50 text-center m-auto"
+        [(ngModel)]="SigninUser.password"
+        #pass="ngModel"
+        [class.is-invalid]="pass.invalid && pass.touched"
+        pattern="^[A-Z].{6,}"
+      />
+      <small [class.d-none]="pass.valid || pass.untouched" class="text-danger"
+        >First character must be capital <br />
+        At least 7 charcters</small
+      >
+    </div>
+    <div class="group-control" [class.has-error]="type.invalid && type.touched">
+      <input
+        type="radio"
+        id="type"
+        value="DOCTOR"
+        name="usertype"
+        class="m-3 p-2"
+        [(ngModel)]="SigninUser.role"
+        #type="ngModel"
+      />
+      <label class="labels">Doctor</label>
+      <input
+        type="radio"
+        name="type"
+        value="PATIENT"
+        name="usertype"
+        class="m-3 p-2"
+        [(ngModel)]="SigninUser.role"
+        #type="ngModel"
+      />
+      <label class="labels">Pationt</label>
+      <small [class.d-none]="type.valid || type.untouched" class="text-danger"
+        >Type is required</small
+      >
+    </div>
+
+    <!-- *ngIf="SigninUser.UserType == 'doctor'" -->
+    <div class="group-control">
+      <button
+        class="btn btn-primary m-3 p-2 w-25"
+        [disabled]="signinForm.form.invalid"
+      >
+        Login
+      </button>
+    </div>
+    <button
+      routerLink="../signup"
+      type="submit"
+      class="btn btn-dark m-3 p-2 w-25"
+    >
+      Rejester
+    </button>
+  </form>
+</div>

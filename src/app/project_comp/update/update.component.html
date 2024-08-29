@@ -1,0 +1,51 @@
+<div
+  class="m-auto text-center position-absolute translate-middle-x translate-middle-y top-50 w-100 m-5"
+>
+  (ngSubmit)="sendObject(newSlot)"
+  <form #pationtform="ngForm" novalidate class="bg-light m-5">
+    <h5>Update your reservstion</h5>
+
+    <div class="m-2 p-2">
+      <label for="doctor" class="m-2">doctor:</label>
+
+      <select
+        name="doctor"
+        id="doctor"
+        required
+        [(ngModel)]="slected._id"
+        (click)="getDoctorSlots(slected)"
+      >
+        <option>Select A Doctor</option>
+        <option
+          *ngFor="let doc of doctor"
+          value="{{ doc._id }}"
+          (ngModelChange)="doctorname = doc.name"
+        >
+          {{ doc.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="m2 p2">
+      <label for="slot" class="m-2">choose slot :</label>
+      <select name="slot" id="slot" required [(ngModel)]="newSlot._id">
+        <option>Select A Slot</option>
+        <option *ngFor="let doc of doctorSlots" [value]="doc._id">
+          <ng-container *ngIf="doc.available; else notAvailable">
+            {{ doc.date }} ---- {{ doc.time }}
+          </ng-container>
+          <ng-template #notAvailable> Slot not available </ng-template>
+        </option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="m-2 p-2 btn btn-primary"
+      [disabled]="pationtform.form.invalid"
+      [disabled]="newSlot.available == false"
+    >
+      Update
+    </button>
+  </form>
+</div>

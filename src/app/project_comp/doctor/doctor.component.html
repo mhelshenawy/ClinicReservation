@@ -1,0 +1,65 @@
+<div class="m-3">
+  <h2 class="d-inline w-50">Hello Doctor <span></span></h2>
+  <button
+    type="submit"
+    class="d-inline btn btn-danger position-absolute"
+    style="right: 70px"
+    (click)="logout()"
+  >
+    <span class="">logout</span>
+  </button>
+</div>
+<div class="w-75 m-auto m-3 text-center">
+  <form
+    (ngSubmit)="addSlot()"
+    #doctorform="ngForm"
+    novalidate
+    class="bg-light m-5"
+  >
+    <h5>Add New Slot</h5>
+
+    <div class="m-2 p-2">
+      <label for="date">Date:</label>
+      <input
+        type="date"
+        name="date"
+        id="date"
+        [(ngModel)]="newSlot.date"
+        required
+      />
+    </div>
+    <div class="m2 p2">
+      <label for="time">Time:</label>
+      <input
+        type="time"
+        nam
+        name="time"
+        id="time"
+        [(ngModel)]="newSlot.time"
+        required
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="m-2 p-2 btn btn-primary"
+      [disabled]="doctorform.form.invalid"
+    >
+      Add Slot
+    </button>
+  </form>
+</div>
+
+<table class="m-auto w-75 text-center mt-3 w-75">
+  <th class="m-2" border="1">Date</th>
+  <th class="m-2" border="1">Time</th>
+  <th class="m-3"><br /></th>
+  <tr *ngFor="let slot of slots" border="1">
+    <td>{{ slot.date }}</td>
+    <td>{{ slot.time }}</td>
+
+    <td>
+      <button (click)="deleteSlot(slot)" class="btn btn-danger">Delete</button>
+    </td>
+  </tr>
+</table>

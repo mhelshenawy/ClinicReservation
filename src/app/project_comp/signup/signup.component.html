@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <h1 class="bg-light text-center">Hello to our project</h1>
+
+  <div>
+    <h2>Sign up Form</h2>
+    <!-- (ngSubmit)="addnewuser()"        for form -->
+    <form
+      #signUpForm="ngForm"
+      novalidate
+      (ngSubmit)="Rejectiration(SignupUser)"
+    >
+      <div class="group-control m-3">
+        <label for="name" class="form-label font-monospace">UserName </label>
+        <input
+          type="text"
+          required
+          name="Username"
+          class="form-control w-50"
+          [(ngModel)]="SignupUser.name"
+          #username="ngModel"
+          pattern="^[a-zA-Z][a-zA-Z\s]{3,15}"
+          [class.is-invalid]="username.invalid && username.touched"
+        />
+        <small
+          [class.d-none]="username.valid || username.untouched"
+          class="text-danger"
+          >Write at least 4 characters</small
+        >
+      </div>
+      <div class="group-control m-3">
+        <label name="email" class="form-label font-monospace">Email </label>
+        <input
+          type="email"
+          required
+          name="Email"
+          class="form-control w-50"
+          [(ngModel)]="SignupUser.email"
+          #Email="ngModel"
+          [class.is-invalid]="Email.invalid && Email.touched"
+          pattern="^[a-zA-Z][a-zA-Z]{3,}@[a-zA-Z]{2,}\.com$"
+        />
+        <small
+          [class.d-none]="Email.valid || Email.untouched"
+          class="text-danger"
+          >At least 4 characters before @ <br />
+          At least 2 charcter before (.com)
+        </small>
+      </div>
+      <div class="group-control m-3">
+        <label name="password" class="form-label font-monospace"
+          >Password
+        </label>
+        <input
+          type="password"
+          required
+          name="Password"
+          class="form-control w-50"
+          [(ngModel)]="SignupUser.password"
+          #pass="ngModel"
+          [class.is-invalid]="pass.invalid && pass.touched"
+          pattern="^[A-Z].{6,}"
+        />
+        <small [class.d-none]="pass.valid || pass.untouched" class="text-danger"
+          >First character must be capital <br />
+          At least 7 charcters</small
+        >
+      </div>
+      <div class="group-control m-3">
+        <label name="password" class="form-label font-monospace"
+          >Confirm password
+        </label>
+        <input
+          type="password"
+          required
+          name="Confirmpass"
+          class="form-control w-50"
+          [(ngModel)]="SignupUser.confirmedPassword"
+          #confirmpass="ngModel"
+          [class.is-invalid]="confirmpass.invalid && confirmpass.touched"
+          pattern="^[A-Z].{6,}"
+        />
+        <small
+          [class.d-none]="confirmpass.valid || confirmpass.untouched"
+          class="text-danger"
+          >First character must be capital <br />
+          At least 7 charcters</small
+        >
+      </div>
+
+      <div
+        class="group-control m-3 text-center w-50"
+        [class.has-error]="type.invalid && type.touched"
+      >
+        <input
+          type="radio"
+          name="UserType"
+          required
+          value="DOCTOR"
+          [(ngModel)]="SignupUser.role"
+          #type="ngModel"
+        />
+        <label for="doctor" class="m-3">Doctor</label>
+        <input
+          type="radio"
+          name="UserType"
+          required
+          value="PATIENT"
+          [(ngModel)]="SignupUser.role"
+          #type="ngModel"
+        />
+        <label for="patiant" class="m-3">Patiant</label>
+        <small [class.d-none]="type.valid || type.untouched" class="text-danger"
+          >Type is required</small
+        >
+      </div>
+      <button
+        class="btn btn-primary m-3"
+        [disabled]="signUpForm.form.invalid"
+        type="submit"
+      >
+        Rejester
+      </button>
+      <a type="submit" routerLink="../login" class="btn btn-primary m-3"
+        >Back to login</a
+      >
+    </form>
+  </div>
+</div>

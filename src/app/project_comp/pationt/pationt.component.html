@@ -1,0 +1,128 @@
+<div class="m-3">
+  <h2 class="d-inline w-50">Hello Pationt <span></span></h2>
+  <<button
+    type="submit"
+    class="d-inline btn btn-danger position-absolute"
+    style="right: 70px"
+    (click)="logout()"
+  >
+    <span class="">logout</span>
+  </button>
+  <div class="w-75 m-auto m-3 text-center">
+    <form
+      (ngSubmit)="addSlot(newSlot)"
+      #pationtform="ngForm"
+      novalidate
+      class="bg-light m-5"
+    >
+      <h5>choose your reservstion</h5>
+
+      <div class="m-2 p-2">
+        <label for="doctor" class="m-2">doctor:</label>
+        <!-- <input
+          type="date"
+          name="date"
+          id="date"
+          [(ngModel)]="newSlot.date"
+          required
+        /> -->
+        <select
+          name="doctor"
+          id="doctor"
+          required
+          [(ngModel)]="slected._id"
+          (click)="getDoctorSlots(slected)"
+        >
+          <option>Select A Doctor</option>
+          <option
+            *ngFor="let doc of doctor"
+            value="{{ doc._id }}"
+            (ngModelChange)="doctorname = doc.name"
+          >
+            {{ doc.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="m2 p2">
+        <label for="slot" class="m-2">choose slot :</label>
+        <select name="slot" id="slot" required [(ngModel)]="newSlot._id">
+          <option>Select A Slot</option>
+          <option *ngFor="let doc of doctorSlots" [value]="doc._id">
+            <ng-container *ngIf="doc.available; else notAvailable">
+              {{ doc.date }} ---- {{ doc.time }}
+            </ng-container>
+            <ng-template #notAvailable> Slot not available </ng-template>
+          </option>
+        </select>
+      </div>
+
+      <button
+        type="submit"
+        class="m-2 p-2 btn btn-primary"
+        [disabled]="pationtform.form.invalid"
+        [disabled]="newSlot.available == false"
+      >
+        Add Slot
+      </button>
+    </form>
+  </div>
+  <table class="m-auto w-75 text-center mt-3 w-75">
+    <th class="m-2" border="1">Doctor</th>
+    <th class="m-2" border="1">Reservation day</th>
+    <th class="m-2" border="1">action</th>
+    <th class="m-3"><br /></th>
+    <tr *ngFor="let slot of selectedslots" border="1">
+      <td>
+        <div *ngIf="!slot.is_updated">
+          {{ slot.doctor_name }}
+        </div>
+        <div *ngIf="slot.is_updated">
+          <select
+            name="doctor"
+            id="doctor"
+            required
+            [(ngModel)]="slected._id"
+            (click)="getDoctorSlots(slected)"
+          >
+            <option>Select A Doctor</option>
+            <option
+              *ngFor="let doc of doctor"
+              value="{{ doc._id }}"
+              (ngModelChange)="doctorname = doc.name"
+            >
+              {{ doc.name }}
+            </option>
+          </select>
+        </div>
+      </td>
+      <td>
+        <div *ngIf="!slot.is_updated">{{ slot.date }}----{{ slot.time }}</div>
+        <div *ngIf="slot.is_updated">
+          <select name="slot" id="slot" required [(ngModel)]="newSlot._id">
+            <option>Select A Slot</option>
+            <option *ngFor="let doc of doctorSlots" [value]="doc._id">
+              <ng-container *ngIf="doc.available; else notAvailable">
+                {{ doc.date }} ---- {{ doc.time }}
+              </ng-container>
+              <ng-template #notAvailable> Slot not available </ng-template>
+            </option>
+          </select>
+        </div>
+      </td>
+
+      <td>
+        <button
+          class="btn btn-info text-white m-3"
+          (click)="update(slot)"
+          (dblclick)="subupdate(slot)"
+        >
+          Update
+        </button>
+        <button (click)="deleteSlot(newSlot)" class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
